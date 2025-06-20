@@ -7,15 +7,15 @@ import com.korit.authstudy.security.security.JwtService;
 import com.korit.authstudy.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UsersController {
 
     private final UsersService usersService;
     private final JwtService jwtService;
@@ -40,4 +40,9 @@ public class UserController {
         return ResponseEntity.ok(jwtService.validLoginAccessToken(authorization));
     }
     // 세션 인증방식, 토큰 인증방식
+
+    @GetMapping("/principal")
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication());
+    }
 }
