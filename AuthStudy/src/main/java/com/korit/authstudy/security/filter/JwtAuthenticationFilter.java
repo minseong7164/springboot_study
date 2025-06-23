@@ -28,6 +28,7 @@ public class JwtAuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+        // 메소드가
         List<String> methods = List.of("POST", "GET", "PUT", "PATCH", "DELETE");
         if (!methods.contains(request.getMethod())) {
             filterChain.doFilter(request, servletResponse);
@@ -49,6 +50,8 @@ public class JwtAuthenticationFilter implements Filter {
                             .userId(user.getId())
                             .username(user.getUsername())
                             .password(user.getPassword())
+                            .fullName(user.getFullName())
+                            .email(user.getEmail())
                             .build();
                     Authentication authentication = new UsernamePasswordAuthenticationToken(principalUser, "", principalUser.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
